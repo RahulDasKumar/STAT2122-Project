@@ -22,10 +22,25 @@ proc reg data = student_data;
 	model stress = age year credit_hours work sleep exercise;
 run;
 /*
-
+ Performing simple linear regression on all the variables to drop insignficant ones
 */
 proc reg data = student_data;
-	model stress = age year sleep exercise;
+	model stress = age;
+run;
+proc reg data = student_data;
+	model stress = year;
+run;
+proc reg data = student_data;
+	model stress = credit_hours;
+run;
+proc reg data = student_data;
+	model stress = work;
+run;
+proc reg data = student_data;
+	model stress = sleep;
+run;
+proc reg data = student_data;
+	model stress = exercise;
 run;
 
 /*
@@ -35,11 +50,11 @@ data women_stem_students;
 	set student_data;
 	where sex = 1 and stem = 1;
 run;
-
-proc print data = women_stem_students;
-run;
+/*
+ Statsitcally significant here
+*/
 proc reg data = women_stem_students;
-	model stress = age year credit_hours work sleep exercise;
+	model stress = sleep;
 run;
 
 
