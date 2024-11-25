@@ -1,7 +1,7 @@
 
-filename myfile = './Perceived Stress of College Students (Responses) - Form Responses 1.csv'
+filename myfile = "./Perceived Stress of College Students (Responses) - Form Responses 1.csv";
 PROC IMPORT OUT=newdata
-    DATAFILE=myfile
+    DATAFILE= myfile
     DBMS=CSV
     REPLACE;
     GETNAMES=YES;
@@ -57,5 +57,16 @@ proc reg data = women_stem_students;
 	model stress = sleep;
 run;
 
-
+DATA women_stem_students;
+    SET women_stem_students;
+	sleep_rest = sleep * year;
+	credit_hours_sleep = sleep * credit_hours;
+	sleep_exercise = sleep * exercise;
+RUN;
+/*
+	Has either significant variables or approaching sigificant vairables 
+*/
+proc reg data = women_stem_students;
+	model stress = credit_hours sleep sleep_rest credit_hours_sleep;
+run;
 
